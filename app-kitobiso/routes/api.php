@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\DonationController;
+use App\Http\Controllers\FundingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -40,3 +42,12 @@ Route::get('/donatur',function(request $request){
     ]);
 });
 
+// API CRUD FUNDING
+Route::get('/funding',[FundingController::class,'index']); // get all data
+Route::get('/funding',[FundingController::class,'store']); // create new data
+Route::get('/funding/{id}',[FundingController::class,'show']); // get data by id
+Route::get('/funding/{id}',[FundingController::class,'update']); // update data by id
+Route::get('/funding/{id}',[FundingController::class,'destroy']); // delete data by id
+
+// API CRUD Donation
+Route::apiResource('donation',DonationController::class);

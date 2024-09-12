@@ -12,7 +12,7 @@ class FundingController extends Controller
      */
     public function index()
     {
-        //
+       return Funding::all();
     }
 
     /**
