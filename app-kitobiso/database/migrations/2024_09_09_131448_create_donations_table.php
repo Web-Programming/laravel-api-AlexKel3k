@@ -11,16 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('fundings', function (Blueprint $table) {
+        Schema::create('donations', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('desc');
-            $table->string('image');
-            $table->string('progress',3);
-            $table->string('duration');
-            $table->double('collected');
-            $table->double('target');
+            $table->double('amount');
+            $table->unsignedBigInteger('funding_id');
             $table->unsignedBigInteger('user_id');
+            $table->foreign('funding_id')->references('id')->on('fundings');
             $table->foreign('user_id')->references('id')->on('users'); //donatur
             $table->timestamps();
         });
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('fundings');
+        Schema::dropIfExists('donations');
     }
 };

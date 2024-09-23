@@ -12,7 +12,15 @@ class FundingController extends Controller
      */
     public function index()
     {
-       return Funding::all();
+        $data = [
+            'status' => 'success',
+            'message' => 'Data Funding berhasil diambil',
+            'data' => Funding::all(),
+        ];
+        return response()->json($data);
+
+
+        return Funding::all();
     }
 
     /**
@@ -20,7 +28,13 @@ class FundingController extends Controller
      */
     public function create()
     {
-        //
+        $input = $request->all();
+        User::create($input);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data Funding berhasil ditambahkan',
+            'data' => $input,
+        ]);
     }
 
     /**
@@ -28,7 +42,24 @@ class FundingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'title' => 'required',
+            'desc' => 'required',
+            'image' => 'required',
+            'progress' => 'required',
+            'duration' => 'required',
+            'collected' => 'required',
+            'target' => 'required',
+            'user_id' => 'required|exists:users,id',
+        ]);
+
+        $funding = Funding::create($validatedData);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data Funding berhasil ditambahkan',
+            'data' => $funding,
+        ]);
     }
 
     /**
@@ -36,7 +67,11 @@ class FundingController extends Controller
      */
     public function show(Funding $funding)
     {
-        //
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data Funding berhasil diambil',
+            'data' => $funding,
+        ]);
     }
 
     /**
@@ -44,7 +79,12 @@ class FundingController extends Controller
      */
     public function edit(Funding $funding)
     {
-        //
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data Funding berhasil diambil',
+            'data' => $funding,
+        ]);
+        
     }
 
     /**
@@ -52,7 +92,16 @@ class FundingController extends Controller
      */
     public function update(Request $request, Funding $funding)
     {
-        //
+        $val = $request->validate([
+            'title' => 'required',
+            'desc' => 'required',
+            'image' => 'required',
+            'progress' => 'required',
+            'duration' => 'required',
+            'collected' => 'required',
+            'target' => 'required',
+            'user_id' => 'required|exists:users,id',
+        ]);
     }
 
     /**
@@ -60,6 +109,10 @@ class FundingController extends Controller
      */
     public function destroy(Funding $funding)
     {
-        //
+        $funding->delete();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data Funding berhasil dihapus',
+        ]);
     }
 }
